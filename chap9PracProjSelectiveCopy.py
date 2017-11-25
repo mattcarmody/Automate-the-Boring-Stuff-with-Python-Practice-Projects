@@ -6,15 +6,18 @@ import os, shutil
 
 absPath = 'C:\\Users\\Papa\\Documents\\mattPython\\automateTheBoringStuff'
 ext = input('What type of file extension do you want to copy? (Don\'t include the dot)')
-extDirPath = absPath + '\\' + ext + 'Copy'
+extDirPath = 'C:\\Users\\Papa\\Documents\\mattPython\\' + ext + 'Copy'
 
-for filename in os.listdir(absPath):
-    if filename.endswith('.' + ext):
-        if not os.path.exists(extDirPath):
-            os.makedirs(extDirPath)
-            print('Made the directory... ' + extDirPath)
-        shutil.copy(filename, extDirPath)
-        print('Copied... ' + filename)
-    else:
-        continue
+if not os.path.exists(extDirPath):
+    os.makedirs(extDirPath)
+    print('Made the directory... ' + extDirPath)
+
+for folderName, subfolders, filenames in os.walk(absPath):
+    for filename in filenames:
+        if filename.endswith('.' + ext):
+            path = os.path.join(folderName, filename)
+            shutil.copy(path, extDirPath)
+            print('Copied... ' + filename)
+        else:
+            continue
 print('Done.')
