@@ -2,7 +2,6 @@
 # chap12PracProjTxtToSheet.py - Copy contents of text files to a spreadsheet.
 
 import openpyxl
-import sys
 
 files = ['rows.txt', 'rowow.txt', 'rowowow.txt']
 
