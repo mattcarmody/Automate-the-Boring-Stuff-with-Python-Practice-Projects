@@ -1,14 +1,15 @@
-#!python3
-# chap4PracProjCommaCode.py - Turn a list into string with particular format.
-
-def newListFunc(spam):
-    prettyString = ''
-    for i in range(len(spam)-1):
-        prettyString += spam[i]
-        prettyString += ', '
-    prettyString += 'and '
-    prettyString += spam[-1]
-    print(prettyString)
+def colloquial(items):
+    output = ''
+    for i in range(len(items)-1):
+        output += '{}, '.format(items[i])
+    output += 'and {}'.format(items[-1])
+    print(output)
     
-test = ['apples', 'bananas', 'tofu', 'cats']
-newListFunc(test)
+testInputs = [['apples', 'bananas', 'tofu', 'cats'],
+              ['rickshaws', 'go-karts', 'umbrellas', 'turtles', 
+                'banana peels'],
+              ['apples', 'oranges'],
+              ['lonely ranger']]
+
+for i in range(len(testInputs)):
+    colloquial(testInputs[i])
