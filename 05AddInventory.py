@@ -1,25 +1,25 @@
-#!python3
-# chap5PracProjAddInv.py - Update inventory of a character.
-
-# Display Inventory function, copied from previous project.
-def displayInventory(inventory):
+# Function copied from previous project.
+def display_inventory(inventory):
     total = 0
     print('Inventory:')
     for k, v in inventory.items():
-        print(str(v) + ' ' + str(k))
+        print('{} {}'.format(v, k))
         total += v
-    print('Total number of items: ' + str(total))
+    print('Total number of items: {}'.format(total))
 
-# Add to Inventory function, needs to work with duplicates.
-def addToInventory(inventory, addedItems):
-    for i in range(len(addedItems)):
-        if addedItems[i] in inventory.keys():
-            inventory[addedItems[i]] += 1
+# Challenge function, needs to work with duplicates.
+def add_inventory(inventory, newItems):
+    for i in range(len(newItems)):
+        if newItems[i] in inventory.keys():
+            inventory[newItems[i]] += 1
         else:
-            inventory.setdefault(addedItems[i], 1)
+            inventory.setdefault(newItems[i], 1)
     return inventory
 
-inv = {'gold coin': 42, 'rope': 1}
+heroInv = {'gold coin': 42, 'rope': 1}
 dragonLoot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
-inv = addToInventory(inv, dragonLoot)
-displayInventory(inv)
+
+print("\nWhen he arrives, the hero has a few things.")
+display_inventory(heroInv)
+print("\nThen he slayed the dragon! Now he has a few more things.")
+display_inventory(add_inventory(heroInv, dragonLoot))
