@@ -1,49 +1,39 @@
-#! python3
-# chap8PracProjMadLibs.py - MadLibs program that reads in from a file,
-#                   updates with user input,
-#                   writes out to a new file,
-#                   and prints to the user.
-
 import re
 
 # Read in text from file and create a list of all the words.
-textFile = open('madLibsFeed.txt')
-textContent = textFile.read()
-textWords = list(textContent.split())
-textFile.close()
+txt_file = open('madLibsFeed.txt')
+file_content = txt_file.read()
+txt_words = list(file_content.split())
+txt_file.close()
 
 # Define regex to recognize placeholders in list.
-madLibRegex = re.compile(r'''(
+mad_lib_regex = re.compile(r'''(
     ADJECTIVE |
     VERB |
     NOUN |
     ADVERB
     )''', re.VERBOSE)
-mo = madLibRegex.findall(textContent)
+mo = mad_lib_regex.findall(file_content)
 
 # Call for user input words and use them to replace placeholders.
-for i in range(len(textWords)):
-    if madLibRegex.match(textWords[i]):
-        # Handle scenarios in which match ends with punctuation.
-        if textWords[i].endswith('.'):
-            sub = (str(input("Enter your own " + textWords[i][:-1].lower() +": ")) + '.')
-        elif textWords[i].endswith(','):
-            sub = (str(input("Enter your own " + textWords[i][:-1].lower() +": ")) + ',')
+for i in range(len(txt_words)):
+    if mad_lib_regex.match(txt_words[i]):
+        if txt_words[i].endswith('.'):
+            sub = input("Enter your own {}: ".format(txt_words[i][:-1].lower()))
+            sub += '.'
+        elif txt_words[i].endswith(','):
+            sub = input("Enter your own {}: ".format(textWords[i][:-1].lower()))
+            sub += ','
         else:
-            sub = (str(input("Enter your own " + textWords[i].lower() +": ")))
-        textWords.remove(textWords[i])
-        textWords.insert(i, sub)
+            sub = input("Enter your own {}: ".format(textWords[i].lower()))
+        txt_words[i] = sub
     else:
         continue
+       
+new_sentence = ' '.join(txt_words)
 
-# Tie updated list into a string.        
-space = ' '
-newSentence = space.join(textWords)
+new_file = open('madLibsOutput.txt', 'w')
+new_file.write(str(new_sentence))
+new_file.close()
 
-# Store updated list in a new file.
-newFile = open('madLibsOutput.txt', 'w')
-newFile.write(str(newSentence))
-newFile.close()
-
-# Print updated list to user.
-print(newSentence)
+print(new_sentence)
