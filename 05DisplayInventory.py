@@ -1,14 +1,11 @@
-#!python3
-# chap5PracProjDispInv.py - Display a character's inventory.
-
 stuff = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
 
-def displayInventory(inventory):
+def display_inventory(inventory):
     total = 0
     print('Inventory:')
     for k, v in inventory.items():
-        print(str(v) + ' ' + str(k))
+        print('{} {}'.format(v, k))
         total += v
-    print('Total number of items: ' + str(total))
+    print('Total number of items: {}'.format(total))
 
-displayInventory(stuff)
+display_inventory(stuff)
