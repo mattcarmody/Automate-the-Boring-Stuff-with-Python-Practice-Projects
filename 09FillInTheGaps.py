@@ -1,37 +1,30 @@
-#!/usr/bin/python3
-# chap9PracProjFillInTheGaps.py - Find gaps in suffix numbering, rename to fill the gaps (keeping files in original order.)
-
+import os
 import re
 import shutil
-import os
+
+DIR = "{YOUR_DIRECTORY_HERE}"
 
 # Define regex to find numbered spam files.
-gapRegex = re.compile(r'''(
+gap_regex = re.compile(r'''(
     (spam)    # given prefix
-    (\d+)      # number
+    (\d+)     # number
     (.txt)    # given file type
     )''', re.VERBOSE)
 
 # Create list of the integers in the file names.
-numlst = []
-filelst = []
-for file in os.listdir('.'):
-	if gapRegex.search(file):
-		num = gapRegex.search(file).group(3)
-		filelst.append(file)
-		numlst.append(num)
-numlst = sorted(numlst)
-print(numlst)
-filelst = sorted(filelst)
-print(filelst)
+file_names = []
+for _file in os.listdir(DIR):
+	if gap_regex.search(_file):
+		file_names.append(_file)
+
+file_names = sorted(file_names)
 
 # Loop through and rename files.
-for i in range(len(numlst)):
-	originalName = filelst[i]
-	newName = "spam" + str(i).zfill(3) + ".txt"
-	if originalName == newName:
-		print("Skipped " + originalName)
+for i, original_name in enumerate(file_names):
+	new_name = "spam{}.txt".format(str(i).zfill(3))
+	if original_name == new_name:
+		print("Skipped {}".format(original_name))
 	else:
-		shutil.move(originalName, newName)
-		print("Renamed " + filelst[i])
+		shutil.move("{}/{}".format(DIR, original_name),"{}/{}".format(DIR, new_name))
+		print("Renamed {}".format(original_name))
 
