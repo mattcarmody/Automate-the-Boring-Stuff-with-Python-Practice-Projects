@@ -1,23 +1,25 @@
-#! python3
-# chap9PracProjSelectiveCopy.py - Copies files of a particular extension to another directory.
-#         If the directory does not exist, it is first created.
+import os 
+import shutil
 
-import os, shutil
+# Linux users: 
+# Beware creating a directory that starts with a "." will be hidden. 
+# Your script will run without errors but you won't see the files in Files
+# or in the terminal unless you explicitly call for hidden files.
 
-absPath = 'C:\\Users\\Papa\\Documents\\mattPython\\automateTheBoringStuff'
-ext = input('What type of file extension do you want to copy? (Don\'t include the dot)')
-extDirPath = 'C:\\Users\\Papa\\Documents\\mattPython\\' + ext + 'Copy'
+SRC = "{YOUR_DIRECTORY_TO_BE_COPIED_HERE}"
+DEST = "{WHERE_TO_PASTE}"
 
-if not os.path.exists(extDirPath):
-    os.makedirs(extDirPath)
-    print('Made the directory... ' + extDirPath)
+ext = input("What type of file extension do you want to copy?")
+if not ext.startswith("."):
+    ext = ".{}".format(ext)
 
-for folderName, subfolders, filenames in os.walk(absPath):
+if not os.path.exists(DEST):
+    os.makedirs(DEST)
+    print('Made the directory... {}'.format(DEST))
+
+for folder, subfolders, filenames in os.walk(SRC):
     for filename in filenames:
-        if filename.endswith('.' + ext):
-            path = os.path.join(folderName, filename)
-            shutil.copy(path, extDirPath)
-            print('Copied... ' + filename)
-        else:
-            continue
+        if filename.endswith(ext):
+            shutil.copy(os.path.join(folder, filename), DEST)
+            print("Copied... {}".format(filename))
 print('Done.')
