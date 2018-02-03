@@ -1,24 +1,21 @@
-#! python3
-# chap6PracProjPrintTable.py - 
+INPUT = [['apples', 'oranges', 'cherries', 'banana'],
+         ['Alice', 'Bob', 'Carol', 'David'],
+         ['dogs', 'cats', 'moose', 'goose']]
 
-tableData = [['apples', 'oranges', 'cherries', 'banana'],
-             ['Alice', 'Bob', 'Carol', 'David'],
-             ['dogs', 'cats', 'moose', 'goose']]
-
-def printTable():
-    grand = maxLength()
-    for j in range(len(tableData[0])):
+def print_table(INPUT):
+    col_width = max_length()
+    for j in range(len(INPUT[0])):
         temp = ''
-        for i in range(len(tableData)):
-            temp += tableData[i][j].rjust(grand[i]+1)
+        for i in range(len(INPUT)):
+            temp += INPUT[i][j].rjust(col_width[i]+1)
         print(temp)
 
-def maxLength():
-    maxList = [0] * len(tableData)
-    for i in range(len(tableData)):
-        for j in range(len(tableData[0])):
-            if len(tableData[i][j]) > maxList[i]:
-                maxList[i] = len(tableData[i][j])
-    return maxList
+def max_length():
+    max_list = [0] * len(INPUT)
+    for i in range(len(INPUT)):
+        for j in range(len(INPUT[0])):
+            if len(INPUT[i][j]) > max_list[i]:
+                max_list[i] = len(INPUT[i][j])
+    return max_list
 
-printTable()
+print_table(INPUT)
