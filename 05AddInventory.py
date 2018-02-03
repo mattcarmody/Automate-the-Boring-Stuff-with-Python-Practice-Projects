@@ -16,10 +16,10 @@ def add_inventory(inventory, newItems):
             inventory.setdefault(newItems[i], 1)
     return inventory
 
-heroInv = {'gold coin': 42, 'rope': 1}
-dragonLoot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
+HERO_INV = {'gold coin': 42, 'rope': 1}
+DRAGON_LOOT = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
 
 print("\nWhen he arrives, the hero has a few things.")
-display_inventory(heroInv)
+display_inventory(HERO_INV)
 print("\nThen he slayed the dragon! Now he has a few more things.")
-display_inventory(add_inventory(heroInv, dragonLoot))
+display_inventory(add_inventory(HERO_INV, DRAGON_LOOT))
