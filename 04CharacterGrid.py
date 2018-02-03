@@ -1,7 +1,4 @@
-#!python3
-# chap4PracProjCharGrid.py - Transform list of lists.
-
-grid = [['.', '.', '.', '.', '.', '.'],
+INPUT = [['.', '.', '.', '.', '.', '.'],
         ['.', 'O', 'O', '.', '.', '.'],
         ['O', 'O', 'O', 'O', '.', '.'],
         ['O', 'O', 'O', 'O', 'O', '.'],
@@ -11,11 +8,11 @@ grid = [['.', '.', '.', '.', '.', '.'],
         ['.', 'O', 'O', '.', '.', '.'],
         ['.', '.', '.', '.', '.', '.']]
 
-columns = len(grid[0])
-rows = len(grid)
+columns = len(INPUT[0])
+rows = len(INPUT)
 
 for j in range(columns):
     temp = ''
     for i in range(rows):
-        temp += grid[i][j]
+        temp += INPUT[i][j]
     print(temp)
