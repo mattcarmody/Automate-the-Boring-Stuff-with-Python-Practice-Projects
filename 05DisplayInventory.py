@@ -1,4 +1,4 @@
-stuff = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+INV = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
 
 def display_inventory(inventory):
     total = 0
@@ -8,4 +8,4 @@ def display_inventory(inventory):
         total += v
     print('Total number of items: {}'.format(total))
 
-display_inventory(stuff)
+display_inventory(INV)
