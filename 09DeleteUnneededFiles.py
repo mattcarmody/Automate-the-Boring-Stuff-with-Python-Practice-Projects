@@ -1,34 +1,25 @@
-#! python3
-# chap9PracProjDeleteUnneededFiles.py - Scans computers for large files and folders.
-#       Is not set up to delete the large files and directories, only find them and print to screen.
+# Scans computers for large files and folders. (does not delete anything)
 
 import os
 
-# Set a directory to search.
-path = 'C:\\Users\\Papa\\Pictures'
+PATH = '{YOUR_PATH_HERE}'
 
-# Set a size threshold.
-fileThreshold = 9000000 # 9MB
-subThreshold = 1000000000 # 1GB
+FILE_THRESHOLD = 2000000 # 2MB
+DIR_THRESHOLD = 10000000 # 10MB
 
-# Walk through directory looking for threshold.
-print('Search begins...')
-for foldername, subfolders, filenames in os.walk(path):
+# Walk through directory looking for big files.
+print('The search begins...')
+for foldername, subfolders, filenames in os.walk(PATH):
         for filename in filenames:
-            if os.path.getsize(os.path.join(foldername, filename)) >= fileThreshold:
-                print(filename + ' is ' + str(os.path.getsize(os.path.join(foldername, filename))))
+            if os.path.getsize(os.path.join(foldername, filename)) >= FILE_THRESHOLD:
+                print('{} is {}'.format(os.path.abspath(filename), os.path.getsize(os.path.join(foldername, filename))))
 
-# Brief intermission.
 print('AND NOW PART TWO.')
 
-# Sum and print size of subdirectories.
-subSizeList = []
-for foldername, subfolders, filenames in os.walk(path):
+# Walk through directory looking for big subdirectories.
+for foldername, subfolders, filenames in os.walk(PATH):
     size = sum(os.path.getsize(os.path.join(foldername, filename)) for filename in filenames)
-    subSizeList.append(size)
-    if size > subThreshold:
-        print(str(size).rjust(11) + ' is the size of ' + foldername)
+    if size > DIR_THRESHOLD:
+        print('{} is {} Bytes'.format(foldername, size))
 
-# That's all folks.
-print(str(sum(subSizeList)))
 print('Done.')
