@@ -1,6 +1,3 @@
-#! /usr/bin/python3
-# chap11PracProjCommandLineEmailer.py
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import sys
@@ -8,41 +5,38 @@ import time
 
 dest = sys.argv[1]
 message = sys.argv[2]
-username = 'placeholder'
-jewel = 'placeholder'
-subject = 'Command Line Emailer'
-url = 'https://mail.yahoo.com'
+USERNAME = '{USERNAME_HERE'
+PASSWORD = '{PASSWORD_HERE}'
+SUBJECT = 'Command Line Emailer'
+URL = 'https://mail.yahoo.com'
 
 browser = webdriver.Firefox()
-browser.get(url)
+browser.get(URL)
 
 try:
-    usernameField = browser.find_element_by_id('login-username')
-    usernameField.send_keys(username)
-    usernameField.submit()
+    username_field = browser.find_element_by_id('login-username')
+    username_field.send_keys(USERNAME)
+    username_field.submit()
 except:
     print("Problem with username...")
-time.sleep(10)
+time.sleep(5)
 try:
-    passwordField = browser.find_element_by_id('login-passwd')
-    passwordField.send_keys(jewel)
-    loginBtn = browser.find_element_by_id('login-signin')
-    loginBtn.click()
+    password_field = browser.find_element_by_id('login-passwd')
+    password_field.send_keys(PASSWORD)
+    browser.find_element_by_id('login-signin').click()
 except:
     print("Problem with password...")
-time.sleep(10)
+time.sleep(5)
 try:
-    composeBtn = browser.find_element_by_class_name('btn-compose')
-    composeBtn.click()
-    time.sleep(10)
-    toField = browser.find_element_by_id('to-field')
-    toField.send_keys(dest)
-    subjectField = browser.find_element_by_id('subject-field')
-    subjectField.send_keys(subject)
-    bodyField = browser.find_element_by_id('rtetext')
-    bodyField.send_keys(message)
-    bodyField.send_keys(Keys.CONTROL + Keys.ENTER)
+    browser.find_element_by_class_name('btn-compose').click()
+    dest_field = browser.find_element_by_id('to-field')
+    dest_field.send_keys(dest)
+    subject_field = browser.find_element_by_id('subject-field')
+    subject_field.send_keys(SUBJECT)
+    body_field = browser.find_element_by_id('rtetext')
+    body_field.send_keys(message)
+    body_field.send_keys(Keys.CONTROL + Keys.ENTER)
 except:
-    print("Problem sending email...")
-time.sleep(5)    
+    print("Problem sending email...") 
+    time.sleep(5)   
 browser.quit()
