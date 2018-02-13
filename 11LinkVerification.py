@@ -10,7 +10,10 @@ skipped = []
 
 def getpage(destination):
     res = requests.get(destination)
-    res.raise_for_status()
+    try:
+        res.raise_for_status()
+    except:
+        print("Couldn't reach the destination...")
     soup = bs4.BeautifulSoup(res.text, "lxml")
     return res, soup
 
