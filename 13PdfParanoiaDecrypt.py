@@ -1,28 +1,24 @@
-#! /usr/bin/python3
-# chap13PracProjPdfParanoiaDecrypt.py
-
 import os
 import PyPDF2
 
 password = 'bubbles'
 
-for folderName, subfolders, filenames in os.walk('/home/matt/AutomateBook/pdfs'):
-	for filename in filenames:
-		if filename.endswith('.pdf'):
-			pdfFile = open(os.path.join(folderName, filename), 'rb')
-			pdfReader = PyPDF2.PdfFileReader(pdfFile)
-			if pdfReader.isEncrypted:
-				print("Attempting to decrypt " + filename + "...")
-				pdfReader.decrypt(password)
-				pdfWriter = PyPDF2.PdfFileWriter()
-				for pageNum in range(pdfReader.numPages):
-					pageObj = pdfReader.getPage(pageNum)
-					pdfWriter.addPage(pageObj)
-				pdfOutputFile = open(os.path.splitext(os.path.join(folderName, filename))[0] + "_decrypted.pdf", 'wb')
-				pdfWriter.write(pdfOutputFile)
-				pdfOutputFile.close()
-				pdfFile.close()
+for folder_name, subfolders, files in os.walk('/home/matt/AutomateBookLocal/pdfs'):
+	for _file in files:
+		if _file.endswith('.pdf'):
+			pdf_file = open(os.path.join(folder_name, _file), 'rb')
+			pdf_reader = PyPDF2.PdfFileReader(pdf_file)
+			if pdf_reader.isEncrypted:
+				print("Attempting to decrypt {}...".format(_file))
+				pdf_reader.decrypt(password)
+				pdf_writer = PyPDF2.PdfFileWriter()
+				for page_num in range(pdf_reader.numPages):
+					pdf_writer.addPage(pdf_reader.getPage(page_num))
+				pdf_output_file = open(os.path.splitext("{}_decrypted.pdf".format(os.path.join(folder_name, _file)))[0], 'wb')
+				pdf_writer.write(pdf_output_file)
+				pdf_output_file.close()
 			else:
-				print(filename + " is a pdf but is not encrypted...")
+				print("{} is a pdf but is not encrypted...".format(_file))
+			pdf_file.close()
 		else:
-			print(filename + " is not a pdf")
+			print("{} is not a pdf".format(_file))
