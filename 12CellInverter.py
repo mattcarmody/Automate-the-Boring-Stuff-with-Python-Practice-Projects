@@ -5,14 +5,17 @@ import openpyxl
 from openpyxl.utils import get_column_letter
 import sys
 
-wb1 = openpyxl.load_workbook(sys.argv[1])
-sheet1 = wb1.active
+if len(sys.argv) == 2:
+    wb_old = openpyxl.load_workbook(sys.argv[1])
+    sheet_old = wb_old.active
 
-wb2 = openpyxl.Workbook()
-sheet2 = wb2.active
+    wb_new = openpyxl.Workbook()
+    sheet_new = wb_new.active
 
-for i in range(1, sheet1.max_row + 1):
-    for j in range(1, sheet1.max_column + 1):
-        sheet2.cell(row=j, column=i).value = sheet1.cell(row=i, column=j).value
+    for i in range(1, sheet_old.max_row + 1):
+        for j in range(1, sheet_old.max_column + 1):
+            sheet_new.cell(row=j, column=i).value = sheet_old.cell(row=i, column=j).value
 
-wb2.save('invertedData.xlsx')
+    wb_new.save("invertedData.xlsx")
+else:
+    print("Command line call must include the name of the spreadsheet to be inverted (call filename)")
