@@ -1,34 +1,32 @@
-#! /usr/bin/python3
-# chap17PracProjIdentifyFileFolders.py
-
 import os
 from PIL import Image
 
-photoExt = ['.jpg', '.png']
-minDim = 500
+SRC = BASE_DIRECTORY_TO_WALK
+PHOTO_EXT = ['.jpg', '.png']
+MIN_DIM = 500
 
-for foldername, subfolders, filenames in os.walk('/home/matt'):
-    numPhotoFiles = 0
-    numNonPhotoFiles = 0
-    for filename in filenames:
+for foldername, subfolders, filenames in os.walk(SRC):
+    num_photos = 0
+    num_non_photos = 0
+    for _file in filenames:
         # Check if file extension isn't .png or .jpg.
-        if filename[-4:].lower() not in photoExt:
-            numNonPhotoFiles += 1
-            continue    # skip to next filename
+        if _file[-4:].lower() not in PHOTO_EXT:
+            num_non_photos += 1
+            continue
 
         # Open image file using Pillow.
-        im = Image.open(os.path.join(foldername, filename))
-        imWidth, imHeight = im.size
+        im = Image.open(os.path.join(foldername, _file))
+        im_width, im_height = im.size
 
         # Check if width & height are larger than 500.
-        if imWidth > minDim and imHeight > minDim:
+        if im_width > MIN_DIM and im_height > MIN_DIM:
             # Image is large enough to be considered a photo.
-            numPhotoFiles += 1
+            num_photos += 1
         else:
             # Image is too small to be a photo.
-            numNonPhotoFiles += 1
+            num_non_photos += 1
 
     # If more than half of files were photos,
     # print the absolute path of the folder.
-    if numPhotoFiles > numNonPhotoFiles:
+    if num_photos > num_non_photos:
         print(foldername)
