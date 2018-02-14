@@ -1,28 +1,28 @@
-#! /usr/bin/python3
-# chap17PracProjExtendExample.py
-
 import os
 from PIL import Image
 
+SRC = IMAGE_DIR
 SQUARE_FIT_SIZE = 300
-LOGO_FILENAME = '/home/matt/AutomateBook/automate_online-materials/catLogoSmall.png'
-logoIm = Image.open(LOGO_FILENAME)
-logoWidth, logoHeight = logoIm.size
-os.makedirs('withLogo', exist_ok=True)
+LOGO_FILENAME = LOGO_FILE
+DEST = IM_W_LOGO_DESTINATION
+
+logo = Image.open(LOGO_FILENAME)
+logo_width, logo_height = logo.size
+os.makedirs(DEST, exist_ok=True)
 formats = ['.jpg', '.png', '.gif', '.bmp']
 
-for filename in os.listdir('.'):
+for _file in os.listdir(SRC):
 	
 	# Skip if it's not an image file or if it is logo file
-    if filename[-4:].lower() not in formats or filename == LOGO_FILENAME:
-        print("Skipping " + filename + " because it isn't an image file")
+    if _file[-4:].lower() not in formats or _file == LOGO_FILENAME:
+        print("Skipping {} because it isn't an image file".format(_file))
         continue
 	
 	# Skip if file is too small
-    im = Image.open(filename)
+    im = Image.open("{}{}".format(SRC, _file))
     width, height = im.size
-    if width < 2*logoWidth or height < 2*logoHeight:
-        print(filename + " is too small, skipping it.")
+    if width < 2*logo_width or height < 2*logo_height:
+        print("{} is too small, skipping it.".format(_file))
         continue
 
     # Resize image if needed
@@ -34,10 +34,10 @@ for filename in os.listdir('.'):
             width = int((SQUARE_FIT_SIZE / height) * width)
             height = SQUARE_FIT_SIZE
 
-        print('Resizing %s...' % (filename))
+        print("Resizing {}...".format(_file))
         im = im.resize((width, height))
 
     # Add logo and save
-    print('Adding logo to %s...' % (filename))
-    im.paste(logoIm, (width - logoWidth, height - logoHeight), logoIm)
-    im.save(os.path.join('withLogo', filename))
+    print("Adding logo to {}...".format(_file))
+    im.paste(logo, (width - logo_width, height - logo_height), logo)
+    im.save(os.path.join(DEST, _file))
