@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-# chap16PracProjUmbrellaReminder.py
 # Checks daily forecast and notifies if rain is expected.
 # Weather source is OpenWeatherMap API.
 # Notification is via email from Yahoo burner to personal.
@@ -9,7 +7,9 @@ import requests
 import smtplib
 import sys
 
-url = "http://api.openweathermap.org/data/2.5/forecast?zip=ZIP,us&APPID=yourAPPID"
+ZIP = YOUR_ZIP_CODE
+APPID = YOUR_APPID
+url = "http://api.openweathermap.org/data/2.5/forecast?zip={},us&APPID={}".format(ZIP, APPID)
 weatherJSON = requests.get(url)
 
 try:
@@ -18,20 +18,20 @@ except:
 	print("Something went wrong getting the API data")
 	sys.exit()
 	
-weatherDict = json.loads(weatherJSON.text)
-todayList = []
+weather = json.loads(weatherJSON.text)
+today = []
 for i in range(0, 5):
-    todayList.append(weatherDict["list"][i]["weather"][0]["main"])
+    today.append(weather["list"][i]["weather"][0]["main"])
 
-if "Rain" in todayList:
-    smtpObj = smtplib.SMTP('smtp.mail.yahoo.com', 587)
-    smtpObj.ehlo()
-    smtpObj.starttls()
-    smtpObj.login(input('login'), input('password'))
-    smtpObj.sendmail("sender", "receiver", "Subject: Bring an Umbrella!\n\nThere's rain afoot.")
-    smtpObj.quit()
+if "Rain" in today:
+    smtp_obj = smtplib.SMTP('smtp.mail.yahoo.com', 587)
+    smtp_obj.ehlo()
+    smtp_obj.starttls()
+    smtp_obj.login(input('login'), input('password'))
+    smtp_obj.sendmail("sender", "receiver", "Subject: Bring an Umbrella!\n\nThere's rain afoot.")
+    smtp_obj.quit()
 else:
     print("These are the expected conditions every three hours:")
-    for condition in todayList:
+    for condition in today:
         print(condition)
 
